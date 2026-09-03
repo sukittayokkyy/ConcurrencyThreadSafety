@@ -44,9 +44,15 @@ public class Bank {
         //            ไม่ว่าจะโอนไปทางไหน โดยใช้ from.id() และ to.id()
         //
         // ห้ามแก้ด้วยการเอาล็อกใบใดใบหนึ่งออก — ยอดรวมจะเพี้ยน
-        // ---------------------------------------------------------------
-        synchronized (from) {
-            synchronized (to) {
+        // ---------------------------------------------------------------\
+        Account first = from ;
+        Account second = to ;
+        if (from.id()>to.id()) {
+            first = to ;
+            second = from ;
+        }
+        synchronized (first) {
+            synchronized (second) {
                 if (!from.withdraw(amount)) {
                     return false;
                 }
